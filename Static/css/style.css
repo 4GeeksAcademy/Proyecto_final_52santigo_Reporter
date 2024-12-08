@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.tarjeta {
+    width: 600px;
+    margin: 600x auto;
+    background: white;
+}
+
+.encabezamiento {
+    display: flex;
+    padding: 10px;
+}
+
+.encabezamiento img {
+    height: 70px;
+}
+
+.encabezamiento h1 {
+    width: 100%;
+}
+
+.cuerpo {
+    display: flex;
+}
+
+.cuerpo.izquierda, .cuerpo.derecha {
+    width: 50%;
+    padding: 0 10px;
+}
+
+.aporte {
+    width: 100%;
+    padding: 5px;
+    margin: 3px 0;
+    border: 0;
+    border-bottom: 1px solid #BDBDBD;
+}
+
+.pie-de-pagina {
+    text-align: center;
+    padding: 10px;
+}
+
+botón {
+    padding: 10px 20px;
+    font-size: 14px;
+}
+.imagen-pequena {
+    width: 100px; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción original */
+}

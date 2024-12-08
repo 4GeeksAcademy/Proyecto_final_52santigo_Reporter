@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Reporter.IA</title>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Evita scroll innecesario */
+        }
+
+        /* Fondo animado */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, #4CAF50, #F44336, #2196F3, #FFEB3B);
+            background-size: 400% 400%;
+            animation: moveBackground 10s infinite;
+            z-index: -1; /* Envía el fondo detrás del contenido */
+        }
+
+        @keyframes moveBackground {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        header {
+            margin: 20px 0;
+        }
+
+        h1 {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .controls {
+            margin: 15px 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        select, input[type="number"], button {
+            font-size: 16px;
+            padding: 5px 10px;
+            margin: 5px;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            color: white;
+            background-color: #4CAF50; /* Verde para días laborales */
+        }
+
+        th.weekend {
+            background-color: #F44336; /* Rojo para sábado y domingo */
+        }
+
+        td {
+            height: 100px;
+            vertical-align: top;
+        }
+
+        td.weekend {
+            background-color: #FFF5F5; /* Fondo claro para sábado y domingo */
+        }
+
+        input {
+            width: 90%;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Calendario Reporter.IA</h1>
+        <div class="controls">
+            <label for="month">Mes:</label>
+            <select id="month">
+                <option value="0">Enero</option>
+                <option value="1">Febrero</option>
+                <option value="2">Marzo</option>
+                <option value="3">Abril</option>
+                <option value="4">Mayo</option>
+                <option value="5">Junio</option>
+                <option value="6">Julio</option>
+                <option value="7">Agosto</option>
+                <option value="8">Septiembre</option>
+                <option value="9">Octubre</option>
+                <option value="10">Noviembre</option>
+                <option value="11">Diciembre</option>
+            </select>
+            <label for="year">Año:</label>
+            <input type="number" id="year" value="2024" min="1900" max="2100">
+            <button onclick="generateCalendar()">Generar Calendario</button>
+        </div>
+    </header>
+    <table>
+        <thead>
+            <tr>
+                <th>Lun</th>
+                <th>Mar</th>
+                <th>Mié</th>
+                <th>Jue</th>
+                <th>Vie</th>
+                <th class="weekend">Sáb</th>
+                <th class="weekend">Dom</th>
+            </tr>
+        </thead>
+        <tbody id="calendar-body">
+            <!-- El calendario se generará dinámicamente aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        function generateCalendar() {
+            const month = parseInt(document.getElementById("month").value);
+            const year = parseInt(document.getElementById("year").value);
+            const calendarBody = document.getElementById("calendar-body");
+
+            // Limpiar el cuerpo del calendario
+            calendarBody.innerHTML = "";
+
+            // Obtener el primer día del mes y el número de días en el mes
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // Ajustar para que el primer día sea lunes
+            const adjustedFirstDay = (firstDay === 0) ? 6 : firstDay - 1;
+
+            // Crear filas y celdas
+            let date = 1;
+            for (let i = 0; i < 6; i++) { // Hasta 6 filas (máximo de semanas en un mes)
+                const row = document.createElement("tr");
+
+                for (let j = 0; j < 7; j++) {
+                    const cell = document.createElement("td");
+
+                    // Aplicar estilo de fin de semana
+                    if (j === 5 || j === 6) {
+                        cell.classList.add("weekend");
+                    }
+
+                    if (i === 0 && j < adjustedFirstDay) {
+                        // Celdas vacías antes del primer día
+                        row.appendChild(cell);
+                    } else if (date > daysInMonth) {
+                        // Celdas vacías después del último día
+                        row.appendChild(cell);
+                    } else {
+                        // Celdas con días
+                        const dayBox = document.createElement("div");
+                        dayBox.textContent = date;
+
+                        const inputBox = document.createElement("input");
+                        inputBox.type = "text";
+                        inputBox.placeholder = "Notas";
+
+                        cell.appendChild(dayBox);
+                        cell.appendChild(inputBox);
+                        row.appendChild(cell);
+                        date++;
+                    }
+                }
+
+                calendarBody.appendChild(row);
+                if (date > daysInMonth) break;
+            }
+        }
+
+        // Generar el calendario inicial para el mes y año actual
+        document.addEventListener("DOMContentLoaded", () => {
+            const now = new Date();
+            document.getElementById("month").value = now.getMonth();
+            document.getElementById("year").value = now.getFullYear();
+            generateCalendar();
+        });
+    </script>
+</body>
+</html>

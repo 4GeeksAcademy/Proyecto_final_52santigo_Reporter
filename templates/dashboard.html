@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Dashboard</title>
+    <link rel="icon" href="Imagenes/c16890ebaf1b25e52b5f16c6c7c97636.jpg">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .dashboard-container {
+            max-width: 900px;
+            margin: 20px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .imagen-pequena {
+            width: 120px;
+            height: auto;
+            margin-top: 10px;
+        }
+
+        .btn{
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .Contactos {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .Contactos h2 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .Contactos input[type="text"] {
+            width: calc(50% - 10px);
+            padding: 10px;
+            margin-right: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+
+        .Contactos button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .Contactos ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .Contactos ul li {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .Contactos ul li a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .Contactos button.remove {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .mensaje-box {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin-right: 20px;
+        }
+
+        .mensaje-box textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            height: 100px;
+            resize: none;
+        }
+
+        .mensaje-box button {
+            margin-top: 10px;
+            margin-bottom: 4px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+            .calenario {
+            margin-top: 10px;
+            margin-bottom: 4px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+
+        .tooltip.visible {
+            display: block;
+        }
+
+        /* Temporizador */
+        .temporizador {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        .temporizador input {
+            width: 100px;
+            padding: 5px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>¡Bienvenido al Dashboard!</h1>
+        <p>Has iniciado sesión exitosamente.</p>
+        <div class="carrousel">
+            <a href="login.html"><button class="btn" >Cerrar Sesión</button></a>
+        </div>
+
+        <div class="tarjeta">
+            <div class="encabezado">
+                <h1>Asistente Reporter.IA</h1>
+                <img src="Imagenes/marvel-ironman-mask.svg" alt="Máscara de Ironman" class="imagen-pequena" />
+            </div>
+
+            <div class="Contactos">
+                <h2>Contactos</h2>
+                <div style="display: flex; justify-content: space-between;">
+                    <input type="text" id="contact-name" placeholder="Nombre">
+                    <input type="text" id="contact-phone" placeholder="Número de teléfono">
+                    <button onclick="addContact()">Añadir Contacto</button>
+                </div>
+                <ul id="contact-list">
+                    <!-- Los contactos se agregarán aquí -->
+                </ul>
+            </div>
+
+            <div class="mensaje-box">
+                <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..."></textarea>
+                <div class="tooltip" id="tooltip">Ingresa el mensaje antes de enviarlo.</div>
+                <button onclick="startSendSMS()">Enviar SMS</button>
+            </div>
+            <div class="box03">
+                <a href="./calendario.html"> <button class="calenario">Ver Calendario</button> </a>
+            </div>
+
+            <!-- Temporizador manipulable -->
+            <div class="temporizador">
+                <label for="timer">Temporizador (minutos): </label>
+                <input type="number" id="timer-minutes" value="1" min="1" max="30" />
+                <p id="timer-display">Tiempo restante: 1 minuto</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        let timerInterval;
+        let sendingInProgress = false;
+
+        // Función para agregar contacto
+        function addContact() {
+            const name = document.getElementById('contact-name').value.trim();
+            const phone = document.getElementById('contact-phone').value.trim();
+
+            if (name === "" || phone === "") {
+                alert("Por favor, completa ambos campos: nombre y número.");
+                return;
+            }
+
+            if (!/^\d{7,15}$/.test(phone)) {
+                alert("Por favor, ingresa un número de teléfono válido (7-20 dígitos).");
+                return;
+            }
+
+            const li = document.createElement('li');
+            li.textContent = `${name} (${phone})`;
+
+            const smsLink = document.createElement('a');
+            smsLink.href = `sms:${phone}`;
+            smsLink.classList.add('sms-button');
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = "Eliminar";
+            deleteButton.classList.add('remove');
+            deleteButton.onclick = function () {
+                li.remove();
+            };
+
+            li.appendChild(smsLink);
+            li.appendChild(deleteButton);
+
+            document.getElementById('contact-list').appendChild(li);
+
+            document.getElementById('contact-name').value = "";
+            document.getElementById('contact-phone').value = "";
+        }
+
+        // Función para iniciar el temporizador y luego enviar el SMS
+        function startSendSMS() {
+            const mensaje = document.getElementById('mensaje').value.trim();
+            const tooltip = document.getElementById('tooltip');
+
+            if (mensaje === "") {
+                tooltip.classList.add('visible');
+                setTimeout(() => tooltip.classList.remove('visible'), 2000);
+                return;
+            }
+
+            const contacts = document.querySelectorAll('#contact-list li');
+            if (contacts.length === 0) {
+                alert("No hay contactos en la lista.");
+                return;
+            }
+
+            // Comenzamos el temporizador y luego enviamos el SMS
+            startTimer(mensaje, contacts);
+        }
+
+        // Función para manejar el temporizador
+        function startTimer(mensaje, contacts) {
+            let minutes = parseInt(document.getElementById('timer-minutes').value);
+            let timeInSeconds = minutes * 60;
+            document.getElementById('timer-display').textContent = `Tiempo restante: ${minutes} minuto(s)`;
+
+            if (timerInterval) {
+                clearInterval(timerInterval); // Limpiamos cualquier temporizador anterior
+            }
+
+            timerInterval = setInterval(function () {
+                timeInSeconds--;
+
+                let remainingMinutes = Math.floor(timeInSeconds / 60);
+                let remainingSeconds = timeInSeconds % 60;
+                document.getElementById('timer-display').textContent = `Tiempo restante: ${remainingMinutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+
+                if (timeInSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    sendSMS(mensaje, contacts);
+                }
+            }, 1000);
+        }
+
+        // Función para enviar los SMS a los contactos
+        function sendSMS(mensaje, contacts) {
+            contacts.forEach(contact => {
+                const smsLink = contact.querySelector('a');
+                if (smsLink) {
+                    console.log(`Mensaje enviado a ${smsLink.href}: ${mensaje}`);
+                }
+            });
+
+            alert("Mensajes enviados a todos los contactos.");
+        }
+    </script>
+</body>
+</html>
